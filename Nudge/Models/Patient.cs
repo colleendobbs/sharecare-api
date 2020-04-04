@@ -6,7 +6,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using SharecareAPI.Models;
 using Newtonsoft.Json;
-using Nudge.Models;
+using ShareCare.Models;
 
 namespace SharecareAPI.Models
 {

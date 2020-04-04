@@ -1,15 +1,15 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using Nudge.Helpers;
-using Nudge.Models;
-using Nudge.Services.CarerService;
+using ShareCare.Helpers;
+using ShareCare.Models;
+using ShareCare.Services.CarerService;
 using SharecareAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Nudge.Services
+namespace ShareCare.Services
 {
     public class AdminService
     {

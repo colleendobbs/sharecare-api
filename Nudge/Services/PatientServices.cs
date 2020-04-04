@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SharecareAPI.Models;
-using Nudge.Models;
+using ShareCare.Models;
 using MongoDB.Bson;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Nudge.Services.CarerService;
+using ShareCare.Services.CarerService;
 
 namespace SharecareAPI.Services.PaitentServices
 {

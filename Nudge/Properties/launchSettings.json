@@ -16,7 +16,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Nudge": {
+    "ShareCare": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "weatherforecast",

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Nudge.Services.CarerService
+namespace ShareCare.Services.CarerService
 {
     public class NewUser
     {

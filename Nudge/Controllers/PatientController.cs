@@ -23,7 +23,7 @@ namespace SharecareAPI.Controllers
 
 
         /// <summary>
-        /// Gets current users active nudges aggregated.
+        /// Gets a patient.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -43,7 +43,7 @@ namespace SharecareAPI.Controllers
         }
 
         /// <summary>
-        /// Gets current patients upcoming appointments.
+        /// Gets a patients upcoming appointments.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -64,7 +64,7 @@ namespace SharecareAPI.Controllers
 
 
         /// <summary>
-        /// Returns patient that match search query.
+        /// Returns patient that match inputted search query.
         /// </summary>
         /// <param name="patientName"></param>
         /// <returns></returns>

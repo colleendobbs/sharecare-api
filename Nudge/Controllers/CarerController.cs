@@ -5,12 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Nudge.Models;
+using ShareCare.Models;
 using Microsoft.AspNetCore.Authorization;
-using Nudge.Services.CarerService;
+using ShareCare.Services.CarerService;
 using System.Security.Claims;
 
-namespace Nudge.Controllers
+namespace ShareCare.Controllers
 {
     [Authorize]
     [Route("api/[controller]/[action]")]
@@ -43,7 +43,7 @@ namespace Nudge.Controllers
         /// </summary>
         /// <returns>User Object</returns>
         /// 
-        [HttpGet]//[FromHeader(Name = "Authorization")] string token
+        [HttpGet]
         public ActionResult<Carer> GetLoggedInUser()
         {
             var claimsIdentity = this.User.Identity as ClaimsIdentity;
@@ -54,7 +54,7 @@ namespace Nudge.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(new { message = "Auth token is incorrect for this user" });
+                return BadRequest(new { message = e });
             }
         }
 
@@ -70,7 +70,7 @@ namespace Nudge.Controllers
         }
 
         /// <summary>
-        /// Creates a new user
+        /// Creates a new Carer.
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
@@ -83,7 +83,7 @@ namespace Nudge.Controllers
         }
 
         /// <summary>
-        /// Comment on Patient
+        /// Comment on Patient.
         /// </summary>
         /// <param name="patientId"></param>
         /// <param name="comment"></param>
@@ -100,7 +100,7 @@ namespace Nudge.Controllers
         }
 
         /// <summary>
-        /// Get pending requests for user.
+        /// Get Work dates for Carer.
         /// </summary>
         /// <returns></returns>
         [HttpGet]

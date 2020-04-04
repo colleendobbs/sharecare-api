@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Nudge.Models;
-using Nudge.Services;
-using Nudge.Services.CarerService;
+using ShareCare.Models;
+using ShareCare.Services;
+using ShareCare.Services.CarerService;
 using SharecareAPI.Models;
 using SharecareAPI.Services.PaitentServices;
 using System;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Nudge.Controllers
+namespace ShareCare.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -31,7 +31,7 @@ namespace Nudge.Controllers
         }
 
         /// <summary>
-        /// Creates a new Administrator
+        /// Creates a new Administrator.
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
@@ -50,7 +50,7 @@ namespace Nudge.Controllers
         }
 
         /// <summary>
-        /// Creates a new Patient
+        /// Creates a new Patient.
         /// </summary>
         /// <param name="patient"></param>
         /// <returns></returns>
@@ -69,7 +69,7 @@ namespace Nudge.Controllers
         }
 
         /// <summary>
-        /// Creates a new Patient
+        /// Creates a new Appointment for a patient.
         /// </summary>
         /// <param name="patientId"></param>
         /// <param name="appointment"></param>
@@ -90,7 +90,7 @@ namespace Nudge.Controllers
         }
 
         /// <summary>
-        /// Update Carers Rota
+        /// Update Carer's Rota.
         /// </summary>
         /// <param name="carerId"></param>
         /// <param name="nextWorkingDays"></param>
@@ -145,7 +145,7 @@ namespace Nudge.Controllers
         }
 
         /// <summary>
-        /// Gets Carer by username.
+        /// Gets Carer by user-name.
         /// </summary>
         /// <returns></returns>
         [HttpGet]

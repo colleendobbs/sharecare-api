@@ -2,8 +2,8 @@
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using Nudge.Helpers;
-using Nudge.Models;
+using ShareCare.Helpers;
+using ShareCare.Models;
 using SharecareAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ using System.Security.Principal;
 using System.Text;
 
 
-namespace Nudge.Services.CarerService
+namespace ShareCare.Services.CarerService
 {
     public interface IUserService
     {

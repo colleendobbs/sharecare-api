@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Nudge.Models
+namespace ShareCare.Models
 {
     public class Carer
     {

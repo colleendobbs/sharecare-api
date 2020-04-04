@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Nudge.Models
+namespace ShareCare.Models
 {
     public class Role
     {
