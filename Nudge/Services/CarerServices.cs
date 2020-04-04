@@ -127,7 +127,9 @@ namespace Nudge.Services.CarerService
 
         public Carer CreateUser(NewUser user)
         {
-            if (ValidateNewUser(user) != null)
+            var newUserObj = ValidateNewUser(user);
+
+            if (newUserObj != null)
             {
                 var x = new Carer()
                 {
@@ -136,6 +138,7 @@ namespace Nudge.Services.CarerService
                     LastName = user.LastName,
                     EmailAddress = user.EmailAddress,
                     Password = user.Password,
+                    Role = user.Role
                 };
                 _carers.InsertOne(x);
                 return x;
@@ -228,7 +231,7 @@ namespace Nudge.Services.CarerService
             return true;
         }
 
-        public IEnumerable<DateTime> GetMyRota(string userId)
+        public IEnumerable<WorkingDay> GetMyRota(string userId)
         {
             var user = _carers.Find(user => user.Id == userId).FirstOrDefault();
             var AllWorkingDays = user.WorkingDays != null ? user.WorkingDays.Where(c => true).ToList() : null;
@@ -238,7 +241,7 @@ namespace Nudge.Services.CarerService
                 return AllWorkingDays.ToList();
             }
 
-            return Enumerable.Empty<DateTime>();   
+            return Enumerable.Empty<WorkingDay>();   
         }
 
     }

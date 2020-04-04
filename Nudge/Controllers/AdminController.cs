@@ -15,7 +15,7 @@ namespace Nudge.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]//ensures that only carers with the role of admin can perform the actions below
     public class AdminController : ControllerBase
     {
         private readonly CarerService _carerservice;
@@ -96,7 +96,7 @@ namespace Nudge.Controllers
         /// <param name="nextWorkingDays"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult UpdateCarersRota(string carerId, DateTime[] nextWorkingDays)
+        public ActionResult UpdateCarersRota(string carerId, WorkingDay[] nextWorkingDays)
         {
             try
             {
@@ -115,7 +115,7 @@ namespace Nudge.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult<List<Carer>> GetActiveCarers([FromHeader(Name = "Authorization")] string token)
+        public ActionResult<List<Carer>> GetAllCarers()
         {
             try
             {
@@ -128,7 +128,24 @@ namespace Nudge.Controllers
         }
 
         /// <summary>
-        /// Gets User by username.
+        /// Gets All Active Patients in the system.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult<List<Patient>> GetAllPatients()
+        {
+            try
+            {
+                return _patientService.GetAllPatients();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = e});
+            }
+        }
+
+        /// <summary>
+        /// Gets Carer by username.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -136,14 +153,6 @@ namespace Nudge.Controllers
         {
             return _carerservice.GetCarerByUsername(username);
         }
-
-        /// <summary>
-        /// Gets UserId by username.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public ActionResult<string> GetCarerIdByUsername(string username) =>
-            _carerservice.GetCarerIdByUsername(username);
 
 
     }

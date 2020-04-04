@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace SharecareAPI.Controllers
 {
@@ -59,6 +60,28 @@ namespace SharecareAPI.Controllers
             }
 
             return AppointMents;
+        }
+
+
+        /// <summary>
+        /// Returns patient that match search query.
+        /// </summary>
+        /// <param name="patientName"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult<IEnumerable<Patient>> SearchPatientByName([Required]string patientName)
+        {
+            var claimsIdentity = this.User.Identity as ClaimsIdentity;
+            var userIdClaim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var results = _patientService.SearchPatients(patientName).ToArray();
+
+            if (results == null)
+            {
+                return NotFound();
+            }
+
+            return results;
         }
 
 

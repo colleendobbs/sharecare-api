@@ -86,6 +86,7 @@ namespace Nudge.Controllers
         /// Comment on Patient
         /// </summary>
         /// <param name="patientId"></param>
+        /// <param name="comment"></param>
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]

@@ -90,6 +90,22 @@ namespace SharecareAPI.Services.PaitentServices
 
             return false;
         }
+        
+        public IEnumerable<Patient> SearchPatients(string patientName)
+        {
+            var patients = _patients.Find(c => c.FullName.Contains(patientName)).ToList();//get the patients that match search
+
+            if (patients != null)
+            {
+                return patients;
+            }
+
+            return Enumerable.Empty<Patient>();
+        }
+
+        public List<Patient> GetAllPatients() =>
+          _patients.Find(patieny => true).ToList();
+
 
     }
 }
