@@ -25,14 +25,22 @@ namespace SharecareAPI.Services.PaitentServices
 
         public Patient GetPatient(string patientId)
         {
-            var x = _patients.Find(c => c.Id == patientId).FirstOrDefault();//get the user
+            var x = _patients.Find(c => c.Id == patientId).FirstOrDefault();//get the patient
             return x ?? null;
         }
 
-        public List<Appointments> GetPatientAppointments(string patientId)
+        public IEnumerable<Appointment> GetPatientAppointments(string patientId)
         {
-            var x = _patients.Find(c => c.Id == patientId).FirstOrDefault();//get the user
-            return x.Appointments.ToList() ?? new List<Appointments>().Concat(x.Appointments.ToList() ?? new List<Appointments>()).ToList();
+            var patient = _patients.Find(c => c.Id == patientId).FirstOrDefault();//get the patient
+
+            var upcomingAppointments = patient.Appointments != null ? patient.Appointments.Where(c => true).ToList() : null;
+
+            if (upcomingAppointments != null)
+            {
+                return upcomingAppointments.ToList();
+            }
+
+            return Enumerable.Empty<Appointment>();
         }
 
         public String CreatePatient(Patient user)
@@ -42,12 +50,45 @@ namespace SharecareAPI.Services.PaitentServices
                     FullName = user.FullName,
                     Record = user.Record,
                     Comments = null,
-                    AdmissionDate = DateTime.Now,
-                    Appointments = null
+                    AdmissionDate = DateTime.Now
                 };
 
                 _patients.InsertOne(x);
                 return x.Id;
+        }
+
+        public bool CreateAppointment(string patientId, Appointment appointment)
+        {
+            var patient = _patients.Find(c => c.Id == patientId).FirstOrDefault();//get the patient
+
+            if (patient != null)
+            {
+                //update patients appointments in the database
+                _patients.UpdateOneAsync(
+                    Builders<Patient>.Filter.Eq(x => x.Id, patient.Id),
+                    Builders<Patient>.Update.AddToSet(x => x.Appointments, appointment));
+
+                return true;
+            }
+
+            return true;
+        }
+
+        public bool CommentOnPatient(string carerId, string patientId, CarerComments comment)
+        {
+            var patient = _patients.Find(c => c.Id == patientId).FirstOrDefault();//get the patient
+
+            if (patient != null)
+            {
+                //update patients comments in the database
+                _patients.UpdateOneAsync(
+                    Builders<Patient>.Filter.Eq(x => x.Id, patient.Id),
+                    Builders<Patient>.Update.AddToSet(x => x.Comments, comment));
+
+                return true;
+            }
+
+            return false;
         }
 
     }

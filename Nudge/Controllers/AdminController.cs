@@ -69,15 +69,57 @@ namespace Nudge.Controllers
         }
 
         /// <summary>
-        /// Gets All Active Nudge Users.
+        /// Creates a new Patient
         /// </summary>
+        /// <param name="patientId"></param>
+        /// <param name="appointment"></param>
         /// <returns></returns>
-        [HttpGet]
-        public ActionResult<List<Carer>> GetActiveUsers([FromHeader(Name = "Authorization")] string token)
+        [HttpPost]
+        public ActionResult CreateNewPatientAppointment(string patientId, Appointment appointment)
         {
             try
             {
-                return _carerservice.GetActiveUsers();
+                 _patientService.CreateAppointment(patientId, appointment);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = "Auth token is incorrect for this user" });
+            }
+
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Update Carers Rota
+        /// </summary>
+        /// <param name="carerId"></param>
+        /// <param name="nextWorkingDays"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult UpdateCarersRota(string carerId, DateTime[] nextWorkingDays)
+        {
+            try
+            {
+                _carerservice.AddDaysToRota(carerId, nextWorkingDays);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = "Auth token is incorrect for this user" });
+            }
+
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Gets All Active Carers in the system.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult<List<Carer>> GetActiveCarers([FromHeader(Name = "Authorization")] string token)
+        {
+            try
+            {
+                return _carerservice.GetAllCarers();
             }
             catch (Exception e)
             {
@@ -90,9 +132,9 @@ namespace Nudge.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult<Carer> GetUserByUsername(string username)
+        public ActionResult<Carer> GetCarerByUsername(string username)
         {
-            return _carerservice.GetUserByUsername(username);
+            return _carerservice.GetCarerByUsername(username);
         }
 
         /// <summary>
@@ -100,8 +142,8 @@ namespace Nudge.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult<string> GetUserIdByUsername(string username) =>
-            _carerservice.GetUserIdByUsername(username);
+        public ActionResult<string> GetCarerIdByUsername(string username) =>
+            _carerservice.GetCarerIdByUsername(username);
 
 
     }

@@ -57,7 +57,14 @@ namespace Nudge.Models
 
         [BsonIgnoreIfNull]//this is so the object is not initialized until the user actually has a request,
         [BsonElement("rota")]
-        public DateTime[] WorkingDays { get; set; }
+        public WorkingDay[] WorkingDays { get; set; }
 
+    }
+
+    public class WorkingDay
+    {
+        public DateTime Date { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
     }
 }

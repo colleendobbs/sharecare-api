@@ -48,7 +48,7 @@ namespace Nudge.Services.CarerService
             if (!userPasswordCheck)
                 return null;
 
-            var user = GetUserByUsername(username);
+            var user = GetCarerByUsername(username);
 
             // authentication successful so generate jwt token
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -101,7 +101,7 @@ namespace Nudge.Services.CarerService
         }
 
 
-        public List<Carer> GetActiveUsers() =>
+        public List<Carer> GetAllCarers() =>
            _carers.Find(user => true).ToList();
 
         public Carer GetActiveUser(string id) 
@@ -110,10 +110,10 @@ namespace Nudge.Services.CarerService
            return user;
         }
 
-        public Carer GetUserByUsername(string username) =>
+        public Carer GetCarerByUsername(string username) =>
             _carers.Find(user => user.UserName == username).FirstOrDefault();
 
-        public string GetUserIdByUsername(string username)
+        public string GetCarerIdByUsername(string username)
         {
             try
             {
@@ -211,12 +211,36 @@ namespace Nudge.Services.CarerService
             _carers.ReplaceOne(user => user.Id == id, updatedUser);
 
 
-        public List<DateTime> GetMyRota(string userId)
+        public bool AddDaysToRota(string carerId, WorkingDay[] daysToWork)
+        {
+            var carer = _carers.Find(c => c.Id == carerId).FirstOrDefault();//get the patient
+
+            if (carer != null)
+            {
+                //update patients appointments in the database
+               _carers.UpdateOneAsync(
+                    Builders<Carer>.Filter.Eq(x => x.Id, carer.Id),
+                    Builders<Carer>.Update.AddToSetEach(x => x.WorkingDays, daysToWork));
+
+                return true;
+            }
+
+            return true;
+        }
+
+        public IEnumerable<DateTime> GetMyRota(string userId)
         {
             var user = _carers.Find(user => user.Id == userId).FirstOrDefault();
             var AllWorkingDays = user.WorkingDays != null ? user.WorkingDays.Where(c => true).ToList() : null;
-            return AllWorkingDays.ToList();
+
+            if (AllWorkingDays != null)
+            {
+                return AllWorkingDays.ToList();
+            }
+
+            return Enumerable.Empty<DateTime>();   
         }
+
     }
 
 }

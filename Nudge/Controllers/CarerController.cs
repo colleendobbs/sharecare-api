@@ -18,10 +18,12 @@ namespace Nudge.Controllers
     public class CarerController : ControllerBase
     {   
         private readonly CarerService _carerservice;
+        private readonly PaitentService _patientService;
 
-        public CarerController(CarerService userService)
+        public CarerController(CarerService userService, PaitentService paitentService)
         {
             _carerservice = userService;
+            _patientService = paitentService;
         }
 
         [AllowAnonymous]
@@ -81,15 +83,39 @@ namespace Nudge.Controllers
         }
 
         /// <summary>
+        /// Comment on Patient
+        /// </summary>
+        /// <param name="patientId"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult<bool> CommentOnPatient(string patientId, CarerComments comment)
+        {
+            var claimsIdentity = this.User.Identity as ClaimsIdentity;
+            var carerIdClaim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var x = _patientService.CommentOnPatient(carerIdClaim, patientId, comment);
+
+            return x;
+        }
+
+        /// <summary>
         /// Get pending requests for user.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult<List<DateTime>> GetWorkingDates()
+        public ActionResult<IEnumerable<WorkingDay>> GetRota()
         {
             var claimsIdentity = this.User.Identity as ClaimsIdentity;
-            var userNameClaim = claimsIdentity.FindFirst(ClaimTypes.Name)?.Value;
-            return _carerservice.GetMyRota(userNameClaim);
+            var userIdClaim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var workingDays = _carerservice.GetMyRota(userIdClaim).ToArray();
+
+            if (workingDays == Enumerable.Empty<WorkingDay>())
+            {
+                return NotFound();
+            }
+
+            return workingDays;
         }
 
     }

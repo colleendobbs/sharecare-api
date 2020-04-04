@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using System.Linq;
 
 namespace SharecareAPI.Controllers
 {
@@ -41,16 +42,16 @@ namespace SharecareAPI.Controllers
         }
 
         /// <summary>
-        /// Gets current users active nudges aggregated.
+        /// Gets current patients upcoming appointments.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult<List<Appointments>> GetPatientAppointments(string patientId)
+        public ActionResult<IEnumerable<Appointment>> GetPatientAppointments(string patientId)
         {
             var claimsIdentity = this.User.Identity as ClaimsIdentity;
             var userIdClaim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            var AppointMents = _patientService.GetPatientAppointments(patientId);
+            var AppointMents = _patientService.GetPatientAppointments(patientId).ToArray();
 
             if (AppointMents == null)
             {

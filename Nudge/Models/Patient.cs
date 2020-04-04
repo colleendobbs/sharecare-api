@@ -34,15 +34,20 @@ namespace SharecareAPI.Models
         [BsonElement("admissionDate")]
         public DateTime AdmissionDate { get; set; }
 
+        [BsonIgnoreIfNull]
         [BsonElement("comments")]
         public CarerComments[] Comments { get; set; }
 
+        [BsonElement("medicine")]
+        public String[] Medicine { get; set; }
+
+        [BsonIgnoreIfNull]
         [BsonElement("appointments")]
-        public Appointments[] Appointments { get; set; }
+        public Appointment[] Appointments { get; set; }
 
     }
 
-    public class Appointments
+    public class Appointment
     {
         public DateTime AppointmentDate { get; set; }
         public String Subject { get; set; }
@@ -60,7 +65,9 @@ namespace SharecareAPI.Models
     public class CarerComments
     {
         public Moods CurrentMood { get; set; }
+        [JsonIgnore]
         public String CurentCarerID { get; set; }
         public String Comments { get; set; }
+        public DateTime CommentDate { get; set; }
     }
 }       
