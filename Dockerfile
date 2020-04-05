@@ -7,4 +7,4 @@ RUN dotnet publish -c Release -o out
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.0-buster-slim
 WORKDIR /app
 COPY --from=build /app/out .
-CMD ASPNETCORE_URLS=http://*:$PORT dotnet Nudge.dll
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet ShareCare.dll
