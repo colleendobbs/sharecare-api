@@ -17,10 +17,15 @@ namespace SharecareAPI.Models
         Frustrated,
         Confused
     }
+    public enum Sexes
+    {
+        Male,
+        Female,
+    }
 
     public class Patient
     {
-        [JsonIgnore]
+
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
@@ -60,6 +65,8 @@ namespace SharecareAPI.Models
         public String[] PastIllnesess { get; set; } 
         public DateTime DOB { get; set; }
         public String[] Allergies { get; set; }
+
+        public Sexes Sex { get; set; }
     }
 
     public class CarerComments

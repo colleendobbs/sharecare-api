@@ -50,7 +50,8 @@ namespace SharecareAPI.Services.PaitentServices
                     FullName = user.FullName,
                     Record = user.Record,
                     Comments = null,
-                    AdmissionDate = DateTime.Now
+                    AdmissionDate = DateTime.Now,
+                    Medicine = user.Medicine
                 };
 
                 _patients.InsertOne(x);
@@ -93,7 +94,7 @@ namespace SharecareAPI.Services.PaitentServices
         
         public IEnumerable<Patient> SearchPatients(string patientName)
         {
-            var patients = _patients.Find(c => c.FullName.Contains(patientName)).ToList();//get the patients that match search
+            var patients = _patients.Find(c => c.FullName.ToLower().Contains(patientName.ToLower())).ToList();//get the patients that match search
 
             if (patients != null)
             {
