@@ -81,6 +81,8 @@ namespace SharecareAPI.Services.PaitentServices
 
             if (patient != null)
             {
+                comment.CarerID = carerId;//adding the current logged in user to the db as the person who commented
+
                 //update patients comments in the database
                 _patients.UpdateOneAsync(
                     Builders<Patient>.Filter.Eq(x => x.Id, patient.Id),
