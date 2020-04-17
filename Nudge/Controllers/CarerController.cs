@@ -93,8 +93,8 @@ namespace ShareCare.Controllers
         public ActionResult<bool> CommentOnPatient(string patientId, CarerComments comment)
         {
             var claimsIdentity = this.User.Identity as ClaimsIdentity;
-            var carerIdClaim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var x = _patientService.CommentOnPatient(carerIdClaim, patientId, comment);
+            var carerNameClaim = claimsIdentity.FindFirst(ClaimTypes.Name)?.Value;
+            var x = _patientService.CommentOnPatient(carerNameClaim, patientId, comment);
 
             return x;
         }

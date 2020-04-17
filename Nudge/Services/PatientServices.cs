@@ -75,13 +75,13 @@ namespace SharecareAPI.Services.PaitentServices
             return true;
         }
 
-        public bool CommentOnPatient(string carerId, string patientId, CarerComments comment)
+        public bool CommentOnPatient(string carerName, string patientId, CarerComments comment)
         {
             var patient = _patients.Find(c => c.Id == patientId).FirstOrDefault();//get the patient
 
             if (patient != null)
             {
-                comment.CarerID = carerId;//adding the current logged in user to the db as the person who commented
+                comment.CarerName = carerName;//adding the current logged in user to the db as the person who commented
 
                 //update patients comments in the database
                 _patients.UpdateOneAsync(

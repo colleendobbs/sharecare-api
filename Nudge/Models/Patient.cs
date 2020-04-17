@@ -72,7 +72,7 @@ namespace SharecareAPI.Models
     public class CarerComments
     {
         public Moods CurrentMood { get; set; }
-        public String CarerID { get; set; }
+        public String CarerName { get; set; }
         public String Comments { get; set; }
         public DateTime CommentDate { get; set; }
     }
